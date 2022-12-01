@@ -1,3 +1,3 @@
 # projectc
 
-Just playing with aalgorithms in c.
+Just playing with algorithms in c.
