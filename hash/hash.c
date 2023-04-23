@@ -14,8 +14,6 @@ node;
 
 const int HASH_MAX = 10;
 
-
-
 int main(void)
 {
     //Declare hashtable
@@ -30,21 +28,12 @@ int main(void)
     //Write to hashtable
     char *name;
 
-    do
-    {
     name = get_string("Write a name!\n");
 
-    
-    hashtable[hash(name)] = name;
-
-    //Print hashtable
     for (int j = 0; j < HASH_MAX;  j++)
     {
-        printf("Value of hashtable[%i] = %s\n", j, hashtable[j]);
+        printf("Value of hashtable[%i] = %s\n", j, hashtable[j]->val);
     }
-    printf("\n");
-    } while (name[0] != '\0');
-
 }
 
 unsigned int hash(char *str)
@@ -55,4 +44,20 @@ unsigned int hash(char *str)
         sum = sum + str[j];
     }
     return sum % HASH_MAX;
+}
+
+//3. Insert new node
+node *insert(node *head, float *x)
+{
+    node *new = malloc(sizeof(node)); //Dynamically allocate space for new sllnode
+
+    if (new == NULL)                  // Make shure we did not runout of memory
+    {
+        return NULL;
+    }
+
+    new->next = head;
+    new->val = x;
+
+    return new;
 }
