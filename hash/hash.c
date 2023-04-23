@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <cs50.h>
 #include <stdbool.h>
-
-unsigned int hash(char *str);
+#include <string.h> 
 
 typedef struct sllist // Temporary name for self referencing
 {
@@ -12,12 +11,18 @@ typedef struct sllist // Temporary name for self referencing
 }
 node;
 
+unsigned int hash(char *str);
+node *insert(node *head, char *x);
+
 const int HASH_MAX = 10;
+
+node *hashtable[HASH_MAX];
+
 
 int main(void)
 {
     //Declare hashtable
-    node *hashtable[HASH_MAX];
+    
 
     //Fill hashtable with NULLS
     for (int i = 0; i < HASH_MAX;  i++)
@@ -30,9 +35,15 @@ int main(void)
 
     name = get_string("Write a name!\n");
 
+    hashtable[hash(name)] = insert(hashtable[hash(name)], name);
+
     for (int j = 0; j < HASH_MAX;  j++)
     {
-        printf("Value of hashtable[%i] = %s\n", j, hashtable[j]->val);
+        if (hashtable[j] != NULL)
+        {
+            printf("Value of hashtable[%i] = %s\n", j, hashtable[j]->val);
+        }
+
     }
 }
 
@@ -47,7 +58,7 @@ unsigned int hash(char *str)
 }
 
 //3. Insert new node
-node *insert(node *head, float *x)
+node *insert(node *head, char *x)
 {
     node *new = malloc(sizeof(node)); //Dynamically allocate space for new sllnode
 
@@ -57,7 +68,7 @@ node *insert(node *head, float *x)
     }
 
     new->next = head;
-    new->val = x;
+    strcpy(new->val, x);
 
     return new;
 }
